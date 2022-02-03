@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../assets/logo.svg'
+import logo from '../assets/zen-staycation.png'
 import { Link } from 'react-router-dom'
 import { useProductsContext } from '../context/products_context'
 import { FaTimes } from 'react-icons/fa'
@@ -9,7 +9,35 @@ import CartButtons from './CartButtons'
 import { useUserContext } from '../context/user_context'
 
 const Sidebar = () => {
-  return <h4>sidebar</h4>
+
+  const isOpen = false
+  return (
+    <SidebarContainer>
+      <aside className={ `${isOpen ? "sidebar show-sidebar" : "sidebar"}` }>
+        <div className="sidebar-header">
+          <img src={logo} alt="zen staycation" className="logo" />
+          <button className="close-btn">
+            <FaTimes/>
+          </button>
+        </div>
+        <ul className="links">
+          {
+            links.map(({id, text, url}) => {
+              return (
+                <li key={id}>
+                  <Link to={url}>{text}</Link>
+                </li>
+              )
+            })
+          }
+          <li>
+              <Link to="/checkout">checkout</Link>
+          </li>
+        </ul>
+        <CartButtons/>
+      </aside>
+    </SidebarContainer>
+  )
 }
 
 const SidebarContainer = styled.div`
@@ -35,7 +63,7 @@ const SidebarContainer = styled.div`
   }
   .logo {
     justify-self: center;
-    height: 45px;
+    height: 90px;
   }
   .links {
     margin-bottom: 2rem;
