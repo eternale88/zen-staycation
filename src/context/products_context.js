@@ -19,7 +19,10 @@ const initialState = {
   products_loading: false,
   products_error: false,
   products: [],
-  featured_products: []
+  featured_products: [],
+  single_product_loading: false,
+  single_product_error: false,
+  single_product: {}
 }
 
 const ProductsContext = React.createContext()
@@ -39,20 +42,32 @@ export const ProductsProvider = ({ children }) => {
     try {
       const res = await axios.get(url)
       const products = res.data
+      console.log(res)
       dispatch({type: GET_PRODUCTS_SUCCESS, payload: products})
     } catch (error) {
       dispatch({type: GET_PRODUCTS_ERROR})
-      throw new Error(`This error occured - "${error}"`)
+      //throw new Error(`This error occured - "${error}"`)
     }
-   
+  }
+
+  const fetchSingleProduct = async(url) => {
+    dispatch({type: GET_SINGLE_PRODUCT_BEGIN})
+    try {
+       const res = await axios.get(url)
+       const product = res.data
+       //console.log(product)
+       dispatch({type: GET_SINGLE_PRODUCT_SUCCESS, payload: product})
+    } catch (error) {
+      dispatch({type: GET_SINGLE_PRODUCT_ERROR})
+    }
   }
 
   useEffect(() => {
-   fetchProducts(url)
+   fetchProducts(`${url}`)
   }, [])
 
   return (
-    <ProductsContext.Provider value={{...state, openSidebar, closeSidebar}}>
+    <ProductsContext.Provider value={{...state, openSidebar, closeSidebar, fetchSingleProduct}}>
       {children}
     </ProductsContext.Provider>
   )
