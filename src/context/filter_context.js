@@ -12,13 +12,25 @@ import {
 } from '../actions'
 import { useProductsContext } from './products_context'
 
-const initialState = {}
+const initialState = {
+  filtered_products: [],
+  all_products:[],
+  grid_view: true
+}
 
 const FilterContext = React.createContext()
 
 export const FilterProvider = ({ children }) => {
+  //need products from it's context for showing product page list for filtering, will also have other instance for default list of total products
+  const { products } = useProductsContext()
+  const [state, dispatch] = useReducer(reducer, initialState)
+
+  //way of loading list of products from other hook into this context custom hook, rules of hook, hook can only be accessed in a component or other hook
+  useEffect(() => {
+   dispatch({type: LOAD_PRODUCTS, payload: products})
+  }, [products])
   return (
-    <FilterContext.Provider value='filter context'>
+    <FilterContext.Provider value={{ ...state }}>
       {children}
     </FilterContext.Provider>
   )
