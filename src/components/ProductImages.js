@@ -1,8 +1,29 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-const ProductImages = () => {
-  return <h4>product images</h4>
+//defualt params in case image undefined, since accessing prop in jsx, have to nest oby in array to make sure that prop always exists
+const ProductImages = ({images = [{ url: ''}]}) => {
+  const [mainImg, setMainImg] = useState(images[0])
+  return (
+    <Wrapper>
+      <img src={mainImg.url} alt="main image" className="main" />
+      <div className="gallery">
+      {
+        images.map((img, index)=> {
+          return (
+            <img 
+              src={img.url} 
+              alt={img.filename} 
+              key={index} 
+              onClick={() => setMainImg(images[index])}
+              className={`${img.url === mainImg.url ? 'active' : null}`}
+            />
+          )
+        })
+      }
+      </div>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.section`
