@@ -13,12 +13,67 @@ const filter_reducer = (state, action) => {
 
   switch (action.type) {
     case LOAD_PRODUCTS:
+      //set max and min price of respective product initally for filters
+      let maxPrice = action.payload.map((prod) => prod.price) //return arr of prices
+      //get most expensive product, use spread because array can't be accepted to .max
+      maxPrice = Math.max(...maxPrice)
+      //console.log(maxPrice)
+
+      //set max to max and current default on range slider (current price) will be max as well, and copy previous values from our state for filters
     return {
       ...state,
-      //important to spread out, or we wouldn't be able to get back to default list, after filtering due to js refering to the same place in memory everytime, now it will refer to most previous state first, very important in this relationship between filtered and default unfiltered product list - the spread is simply copying values rather than refering to the same place in memory
+      //important to spread out (for all_prod and filtered_prod), or we wouldn't be able to get back to default list, after filtering due to js refering to the same place in memory everytime(in place mutation), now it will refer to most previous state first, very important in this relationship between filtered and default unfiltered product list - the spread is simply copying values rather than refering to the same place in memory
       all_products: [...action.payload],
-      filtered_products: [...action.payload]
+      filtered_products: [...action.payload],
+      filters: {
+        ...state.filters,
+        price: maxPrice,
+        max_price: maxPrice
+      }
     }
+    case SET_GRIDVIEW:
+      return {
+        ...state,
+        grid_view: true
+      }
+      case SET_LISTVIEW:
+        return {
+          ...state,
+          grid_view: false
+        }
+      case UPDATE_SORT:
+        return {
+          ...state,
+          sort: action.payload
+        }
+      case SORT_PRODUCTS:
+        const { sort, filtered_products } = state
+
+        //update array based on sorting type
+        //destructure filtered products initially just in case there's a scenario where none match some will be displayed, otherwise the tempProducts sorted are passed in in return so they will be displayed
+        let tempProducts = [...filtered_products]
+        if(sort === 'price-lowest') {
+          tempProducts.sort((a, b) => a.price - b.price)
+        }
+        if(sort === 'price-highest') {
+          tempProducts.sort((a, b) => b.price - a.price)
+        }
+        if(sort === 'name-a') {
+          tempProducts = tempProducts.sort((a, b) => {
+            //cool method that compares value of 2 string values
+            return a.name.localeCompare(b.name)
+          })
+        }
+        if(sort === 'name-z') {
+          tempProducts = tempProducts.sort((a, b) => {
+            //cool method that compares value of 2 string values
+            return b.name.localeCompare(a.name)
+          })
+        }
+        return {
+          ...state,
+          filtered_products: tempProducts
+        }
     default:
       throw new Error(`No Matching "${action.type}" - action type`)
   }
