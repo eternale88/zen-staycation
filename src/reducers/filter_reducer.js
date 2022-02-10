@@ -74,6 +74,21 @@ const filter_reducer = (state, action) => {
           ...state,
           filtered_products: tempProducts
         }
+        case UPDATE_FILTERS:
+          const {name, value} = action.payload
+          return {
+            ...state,
+            filters: {
+              ...state.filters,
+              //[name] dynamic prop es6, it will be whatever we need it to be, for different filters
+              [name]: value
+            }
+          }
+        case FILTER_PRODUCTS:
+          //console.log('filter reducer called')
+          return {
+            ...state
+          }
     default:
       throw new Error(`No Matching "${action.type}" - action type`)
   }

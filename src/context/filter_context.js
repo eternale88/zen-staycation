@@ -43,8 +43,9 @@ export const FilterProvider = ({ children }) => {
 
   //sort products when product array is updated, and when sort type changes
   useEffect(() => {
+    dispatch({type: FILTER_PRODUCTS})
     dispatch({ type:SORT_PRODUCTS })
-  }, [products, state.sort])
+  }, [products, state.sort, state.filters])
 
   const setGridView = () => {
     dispatch({ type: SET_GRIDVIEW})
@@ -59,8 +60,25 @@ export const FilterProvider = ({ children }) => {
     const value  = e.target.value
     dispatch({type: UPDATE_SORT, payload: value})
   }
+
+    //updates name to indicate type of filtering
+  
+  const updateFilters = (e) => {
+    //name has to match 'text' prop from filters, and have matching html name attribute on the input, so correct val will update dynamically
+    let name = e.target.name 
+    let value = e.target.value
+    //handle buttons for categories, as button values aren't accessible with e.target.value
+    if(name === 'category') {
+      value = e.target.textContent
+    }
+    dispatch({type: UPDATE_FILTERS, payload: {name, value}})
+  }
+
+  const clearFilters = () => {
+
+  }
   return (
-    <FilterContext.Provider value={{ ...state, setGridView, setListView, updateSort }}>
+    <FilterContext.Provider value={{ ...state, setGridView, setListView, updateSort, updateFilters, clearFilters }}>
       {children}
     </FilterContext.Provider>
   )
