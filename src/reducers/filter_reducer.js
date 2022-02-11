@@ -86,8 +86,38 @@ const filter_reducer = (state, action) => {
           }
         case FILTER_PRODUCTS:
           //console.log('filter reducer called')
+          const { all_products } = state
+          const { text, category, company, color, price, shipping } = state.filters 
+          //console.log(state.filters)
+
+          //start with fresh set of data where we have all of the products, and then filter them
+
+          let filteredProducts = [...all_products]
+          //text filtering
+          if(text) {
+            filteredProducts = filteredProducts.filter((p) => {
+              //return values that start with text user has typed in
+              return p.name.toLowerCase().startsWith(text)
+            })
+          }
+          
+          //return newly filtered products
           return {
-            ...state
+            ...state,
+            filtered_products: filteredProducts
+          }
+        case CLEAR_FILTERS:
+          return {
+            ...state,
+            filters: {
+              ...state.filters,
+              text: '',
+              company: 'all',
+              category: 'all',
+              color: 'all',
+              price: state.filters.max_price,
+              shipping: false
+            }
           }
     default:
       throw new Error(`No Matching "${action.type}" - action type`)

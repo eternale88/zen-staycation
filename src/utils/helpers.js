@@ -16,8 +16,7 @@ export const getUniqueValues = (data, type) => {
 	if (type === 'colors') {
 		unique = unique.flat()
 	}
-
-		// returns new array with first element called 'all', and spreads out unique values, which will change depending on which category was passed in, this is a dynamic way of returning the unique vals
+		// returns new array with first element called 'all', and spreads out unique values, which will change depending on which category was passed in, this is a dynamic way of returning the unique vals based on type
 			//console.log(unique)
 
 	return ['all', ...new Set(unique)]

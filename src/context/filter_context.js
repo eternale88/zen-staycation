@@ -71,11 +71,22 @@ export const FilterProvider = ({ children }) => {
     if(name === 'category') {
       value = e.target.textContent
     }
+    if(name === 'color') {
+      //get custom html attribute value
+      value = e.target.dataset.color
+    }
+    if(name === 'price') {
+      value = parseInt(value)
+    }
+    //free shipping checkbox
+    if(name === 'shipping') {
+      value = e.target.checked
+    }
     dispatch({type: UPDATE_FILTERS, payload: {name, value}})
   }
 
   const clearFilters = () => {
-
+    dispatch({type: CLEAR_FILTERS})
   }
   return (
     <FilterContext.Provider value={{ ...state, setGridView, setListView, updateSort, updateFilters, clearFilters }}>
