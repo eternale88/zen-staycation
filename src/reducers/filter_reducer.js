@@ -90,7 +90,7 @@ const filter_reducer = (state, action) => {
           const { text, category, company, color, price, shipping } = state.filters 
           //console.log(state.filters)
 
-          //start with fresh set of data where we have all of the products, and then filter them
+          //start with fresh set of data where we have all of the products, and then filter them -important!
 
           let filteredProducts = [...all_products]
           //text filtering
@@ -100,7 +100,31 @@ const filter_reducer = (state, action) => {
               return p.name.toLowerCase().startsWith(text)
             })
           }
-          
+          //Category filtering
+          if(category !== 'all' && category) {
+            filteredProducts = filteredProducts.filter((p) => {
+              return p.category.toLowerCase() === category
+            })
+          }
+          //company filtering
+          if(company !== 'all' && company) {
+            filteredProducts = filteredProducts.filter((p) => {
+              return p.company.toLowerCase() === company
+            })
+          }
+          //color filtering
+          if(color !== 'all' && color) {
+            filteredProducts = filteredProducts.filter((p) => {
+              return p.colors.find((c) => c === color)
+            })
+          }
+          //price
+          //if user selected price is less than (price, which by default is set to maxPrice, return elements that meet those conditions, else don't)
+          filteredProducts = filteredProducts.filter((p) => p.price <= price)
+          //shipping
+          if(shipping) {
+            filteredProducts = filteredProducts.filter((p) => p.shipping === true)
+          }
           //return newly filtered products
           return {
             ...state,
