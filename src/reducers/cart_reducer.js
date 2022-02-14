@@ -15,7 +15,7 @@ const cart_reducer = (state, action) => {
       if(tempItem) {
         const tempCart = state.cart.map((cartItem) => {
         if(cartItem.id === id + color) {
-            console.log(cartItem.id, id)
+            //console.log(cartItem.id, id)
             let newAmount = cartItem.amount + amount
             //check to make sure enough items in stock, if not, set to max
             if(newAmount > cartItem.max) {
@@ -25,6 +25,7 @@ const cart_reducer = (state, action) => {
           }
           else {
             //if we aren't updating amount return cart item as is
+            //seems redundant, but maybe important 
             return cartItem
           }
         })
@@ -42,6 +43,17 @@ const cart_reducer = (state, action) => {
         }
         return {...state, cart: [...state.cart, newItem]}
       }
+      //end add to cart
+
+      case REMOVE_CART_ITEM:
+        let tempCart = state.cart.filter((item) => item.id !== action.payload)
+        return {...state, cart: tempCart}
+
+      case CLEAR_CART:
+        return {...state, cart: []}
+
+      case TOGGLE_CART_ITEM_AMOUNT: 
+        return {...state, cart: [...state.cart, {amount: action.payload.value}]}
 
     default:
       throw new Error(`No Matching "${action.type}" - action type`)
