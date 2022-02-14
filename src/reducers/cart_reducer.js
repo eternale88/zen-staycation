@@ -53,7 +53,46 @@ const cart_reducer = (state, action) => {
         return {...state, cart: []}
 
       case TOGGLE_CART_ITEM_AMOUNT: 
-        return {...state, cart: [...state.cart, {amount: action.payload.value}]}
+        const {id: itemId, value} = action.payload
+        // const tempItemToggle = state.cart.find((item) => item.id === itemId)
+        const temporaryCart = state.cart.map((item) => {
+          if(item.id === itemId) {
+            if(value === "inc") {
+              let newAmount = item.amount + 1
+              if(newAmount > item.max) {
+                newAmount = item.max
+              }
+              return {...item, amount: newAmount}
+            }
+            if(value === "dec") {
+              let newAmount = item.amount - 1
+              if(newAmount < 1) {
+                newAmount = 1
+              }
+              return {...item, amount: newAmount}
+            }
+
+          } else {
+            //if not toggling return item as is
+            return item
+          }
+        })
+        
+        return {...state, cart: temporaryCart }
+        //end of toggle cart amount
+
+        //count totals
+        case COUNT_CART_TOTALS:
+          const {total_items, total_amount} = state.cart.reduce((total, cartItem) => {
+            const {amount, price} = cartItem
+            //get amount of items
+            total.total_items += amount
+            //get price of those items
+            total.total_amount += price * amount
+            //always return total(accumulator) with reducer or will break
+            return total
+          }, {total_items: 0, total_amount: 0})
+          return {...state, total_amount, total_items} 
 
     default:
       throw new Error(`No Matching "${action.type}" - action type`)

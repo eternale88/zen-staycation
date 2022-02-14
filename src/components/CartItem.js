@@ -4,25 +4,18 @@ import { formatPrice } from '../utils/helpers'
 import AmountButtons from './AmountButtons'
 import { FaTrash } from 'react-icons/fa'
 import { useCartContext } from '../context/cart_context'
-const CartItem = ({id, image, name, color, price, amount, max}) => {
+const CartItem = ({id, image, name, color, price, amount }) => {
   const { removeItem, toggleAmount} = useCartContext()
 
-  const [newAmount, setNewAmount] = React.useState(amount)
 
 
   const increase = () => {
-    setNewAmount((oldAmount) => {
-      let tempAmount = oldAmount + 1
-      if(tempAmount > max) {
-        tempAmount = max
-      }
-      //sends to action in contextr and trigger reducer
-      toggleAmount(id, tempAmount)
-    })
+      //sends to action in context and trigger reducer
+      toggleAmount(id, 'inc')
   }
 
   const decrease = () => {
-    
+       toggleAmount(id, 'dec')
   }
   
   
