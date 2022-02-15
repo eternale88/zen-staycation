@@ -49,7 +49,21 @@ export const ProductsProvider = ({ children }) => {
       //throw new Error(`This error occured - "${error}"`)
     }
   }
-
+//   const fetchSingleProduct = useCallback(
+//   async() => {
+//     dispatch({type: GET_SINGLE_PRODUCT_BEGIN})
+//     try {
+//        const res = await axios.get(url)
+//        const product = res.data
+//        //console.log(product)
+//        dispatch({type: GET_SINGLE_PRODUCT_SUCCESS, payload: product})
+//     } catch (error) {
+//       dispatch({type: GET_SINGLE_PRODUCT_ERROR})
+//     }
+//   },
+//   [url],
+// )
+//without useCallback
   const fetchSingleProduct = async(url) => {
     dispatch({type: GET_SINGLE_PRODUCT_BEGIN})
     try {

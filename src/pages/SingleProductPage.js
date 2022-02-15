@@ -26,8 +26,10 @@ const SingleProductPage = () => {
       single_product: product
   } = useProductsContext()
 
+
   useEffect(() => {
     fetchSingleProduct(`${url}${id}`)
+    // eslint-disable-next-line
   }, [id])
 
   //redirect user back to homepage if there's an error
@@ -38,6 +40,7 @@ const SingleProductPage = () => {
         history.push('/')
       }, 3000)
     }
+    // eslint-disable-next-line
   }, [error])
 
   if(loading) {

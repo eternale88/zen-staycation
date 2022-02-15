@@ -72,10 +72,9 @@ const cart_reducer = (state, action) => {
               return {...item, amount: newAmount}
             }
 
-          } else {
-            //if not toggling return item as is
-            return item
           }
+            //if not toggling return item as is,else caused eslint error
+            return item
         })
         
         return {...state, cart: temporaryCart }
