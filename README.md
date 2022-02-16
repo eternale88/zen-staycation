@@ -46,7 +46,12 @@ version used - "react-router-dom": "^5.2.0",
 ## Serverless Netlify Functions - for the backend api
 
 - [Docs](https://www.netlify.com/products/functions/)
+ 
+ ## Stripe integration - for processing user payments
 
+- [Docs for payments quickstart](https://stripe.com/docs/payments/quickstart)
+
+###select react and node for a similar setup
 
 
 ## Auth0
