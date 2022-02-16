@@ -51,7 +51,7 @@ version used - "react-router-dom": "^5.2.0",
 
 - [Docs for payments quickstart](https://stripe.com/docs/payments/quickstart)
 
-###select react and node for a similar setup
+### select react and node for a similar setup
 
 
 ## Auth0
