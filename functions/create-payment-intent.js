@@ -34,11 +34,5 @@ exports.handler = async function(event, context) {
 				body: JSON.stringify({ msg: error.message })
 			}
 		}
-	//console.log(cart) 
-		return {
-			statusCode: 200,
-			body: JSON.stringify(cart)
-		}
 	}
-	return { statusCode: 405, body: 'Only POST Requests Allowed' }
 }
