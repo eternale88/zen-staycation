@@ -1,13 +1,15 @@
 # React Ecommerce App
 
+## for buying cool things to make staying at home comfortable during upredictable times
+
+
+- css (global styles, styled components)
+- index.js for easier imports
+
 ## Netlify integration with Github for contiuous deployment
 [![Netlify Status](https://api.netlify.com/api/v1/badges/d3895165-8829-4079-95c1-45026f01ac9e/deploy-status)](https://app.netlify.com/sites/zenstaycation/deploys)
 
 [Netlify Docs](https://app.netlify.com/)
-## for buying cool things to make staying at home comfortable during upredictable times
-
-- css provided (global styles, styled components)
-- index.js for easier imports
 
 ## Styled Components
 
