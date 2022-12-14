@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useProductsContext } from '../context/products_context'
 import { single_product_url as url } from '../utils/constants'
 import { formatPrice } from '../utils/helpers'
@@ -17,15 +17,14 @@ import { Link } from 'react-router-dom'
 const SingleProductPage = () => {
   const { id } = useParams()
 
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const {
-      fetchSingleProduct, 
-      single_product_loading: loading,
-      single_product_error: error,
-      single_product: product
+    fetchSingleProduct,
+    single_product_loading: loading,
+    single_product_error: error,
+    single_product: product,
   } = useProductsContext()
-
 
   useEffect(() => {
     fetchSingleProduct(`${url}${id}`)
@@ -34,34 +33,46 @@ const SingleProductPage = () => {
 
   //redirect user back to homepage if there's an error
   useEffect(() => {
-    if(error) {
+    if (error) {
       setTimeout(() => {
         //hook for redirection
-        history.push('/')
+        navigate.push('/')
       }, 3000)
     }
     // eslint-disable-next-line
   }, [error])
 
-  if(loading) {
-    return <Loading/>
+  if (loading) {
+    return <Loading />
   }
 
-  if(error) {
-    return <Error/>
+  if (error) {
+    return <Error />
   }
 
-  const {name, price, description, stock, stars, reviews, id:sku, company, images} = product
+  const {
+    name,
+    price,
+    description,
+    stock,
+    stars,
+    reviews,
+    id: sku,
+    company,
+    images,
+  } = product
   return (
     <Wrapper>
       <PageHero title={name} product />
       <div className="section section-center page">
-        <Link to="products" className="btn">back to products</Link>
+        <Link to="products" className="btn">
+          back to products
+        </Link>
         <div className="product-center">
-          <ProductImages images={images}/>
+          <ProductImages images={images} />
           <section className="content">
             <h2>{name}</h2>
-            <Stars stars={stars} reviews={reviews}/>
+            <Stars stars={stars} reviews={reviews} />
             <h5 className="price">{formatPrice(price)}</h5>
             <p className="desc">{description}</p>
             <p className="info">
@@ -76,8 +87,8 @@ const SingleProductPage = () => {
               <span>Brand : </span>
               {company}
             </p>
-            <hr/>
-            {stock > 0 && <AddToCart product={product}/>}
+            <hr />
+            {stock > 0 && <AddToCart product={product} />}
           </section>
         </div>
       </div>
