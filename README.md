@@ -43,7 +43,7 @@ import { FiUsers, FiUserPlus } from 'react-icons/fi';
 
 ## React Router Dom
 
-version used - "react-router-dom": "^5.2.0",
+version used - "react-router-dom": "^^6.4.5",
 
 - [react-router-dom - Main Docs](https://reactrouter.com/web/guides/quick-start)
 
